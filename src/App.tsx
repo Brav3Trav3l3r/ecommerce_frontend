@@ -1,21 +1,34 @@
+import { useAuth } from "@/contexts/AuthContext"
+import { LoginPage } from "@/pages/LoginPage"
 import { Button } from "@/components/ui/button"
 
-export function App() {
+function MainApp() {
+  const { userId, logout } = useAuth()
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <div className="flex min-h-svh flex-col bg-background">
+      <header className="flex items-center justify-between border-b border-border px-6 py-4">
+        <span className="text-sm font-medium text-foreground">AETHER ™</span>
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-xs text-muted-foreground">{userId}</span>
+          <Button variant="outline" size="sm" onClick={logout}>
+            Switch User
+          </Button>
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
+      </header>
+      <main className="flex flex-1 items-center justify-center p-6">
+        <div className="text-center text-sm text-muted-foreground">
+          <p>Logged in as <span className="font-mono text-foreground">{userId}</span></p>
+          <p className="mt-1">Start building your store here.</p>
         </div>
-      </div>
+      </main>
     </div>
   )
+}
+
+export function App() {
+  const { userId } = useAuth()
+  return userId ? <MainApp /> : <LoginPage />
 }
 
 export default App
