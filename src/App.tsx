@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext"
 import { useCart } from "@/contexts/CartContext"
 import { LoginPage } from "@/pages/LoginPage"
 import { HomePage } from "@/pages/HomePage"
+import { AdminPage } from "@/pages/AdminPage"
 import { CartSheet } from "@/components/CartSheet"
 import { Button } from "@/components/ui/button"
 
@@ -38,7 +39,8 @@ function MainApp() {
 }
 
 export function App() {
-  const { userId } = useAuth()
+  const { userId, adminKey } = useAuth()
+  if (adminKey) return <AdminPage />
   return userId ? <MainApp /> : <LoginPage />
 }
 

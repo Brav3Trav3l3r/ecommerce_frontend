@@ -1,3 +1,4 @@
+import { Shield } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
 import { cn } from "@/lib/utils"
 
@@ -10,7 +11,7 @@ const USERS = [
 ]
 
 export function LoginPage() {
-  const { login } = useAuth()
+  const { login, loginAdmin } = useAuth()
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-background px-4">
@@ -50,6 +51,37 @@ export function LoginPage() {
             </div>
           </button>
         ))}
+      </div>
+
+      {/* Admin card — visually separated */}
+      <div className="mt-6 w-full max-w-lg">
+        <div className="mb-3 flex items-center gap-3">
+          <div className="h-px flex-1 bg-border" />
+          <span className="font-mono text-[10px] tracking-widest text-muted-foreground/50 uppercase">
+            Admin
+          </span>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        <button
+          onClick={() => loginAdmin("admin-secret")}
+          className={cn(
+            "group flex w-full items-center gap-4 rounded-lg border border-amber-500/30 bg-amber-50/50 px-5 py-4",
+            "transition-colors duration-150 hover:border-amber-500/60 hover:bg-amber-50",
+            "dark:bg-amber-950/20 dark:border-amber-500/20 dark:hover:bg-amber-950/40 dark:hover:border-amber-500/40",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50"
+          )}
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-amber-500/40 bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+            <Shield className="h-4 w-4" />
+          </div>
+          <div className="text-left">
+            <p className="text-sm font-medium text-amber-900 dark:text-amber-300">Admin</p>
+            <p className="font-mono text-xs text-amber-700/70 dark:text-amber-500/70">store admin</p>
+          </div>
+          <span className="ml-auto font-mono text-[10px] tracking-widest text-amber-600/50 dark:text-amber-500/40 uppercase">
+            Dashboard →
+          </span>
+        </button>
       </div>
 
       <p className="mt-10 font-mono text-[10px] tracking-widest text-muted-foreground/40 uppercase">
