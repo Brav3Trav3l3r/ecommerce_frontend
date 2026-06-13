@@ -3,11 +3,12 @@ import { useAuth } from "@/contexts/AuthContext"
 import { useCart } from "@/contexts/CartContext"
 import { LoginPage } from "@/pages/LoginPage"
 import { HomePage } from "@/pages/HomePage"
+import { CartSheet } from "@/components/CartSheet"
 import { Button } from "@/components/ui/button"
 
 function MainApp() {
   const { userId, logout } = useAuth()
-  const { cartCount } = useCart()
+  const { cartCount, openCart } = useCart()
 
   return (
     <div className="flex min-h-svh flex-col bg-background">
@@ -16,7 +17,7 @@ function MainApp() {
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs text-muted-foreground">{userId}</span>
           <div className="relative">
-            <Button variant="ghost" size="icon-sm" aria-label="Cart">
+            <Button variant="ghost" size="icon-sm" aria-label="Cart" onClick={openCart}>
               <ShoppingCart />
             </Button>
             {cartCount > 0 && (
@@ -31,6 +32,7 @@ function MainApp() {
         </div>
       </header>
       <HomePage />
+      <CartSheet />
     </div>
   )
 }
