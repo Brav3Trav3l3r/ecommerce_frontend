@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Minus, Plus, Trash2 } from "lucide-react"
+import { Minus, Plus, Trash2, Copy, Check as CheckIcon } from "lucide-react"
 import { useCart } from "@/contexts/CartContext"
 import { apiFetch } from "@/lib/api"
 import { Button } from "@/components/ui/button"
@@ -27,7 +27,15 @@ export function CartSheet() {
   const [couponDiscount, setCouponDiscount] = React.useState<number | null>(null)
   const [validatingCoupon, setValidatingCoupon] = React.useState(false)
 
+  const [copied, setCopied] = React.useState(false)
   const [checkingOut, setCheckingOut] = React.useState(false)
+
+  function handleCopyCoupon(code: string) {
+    navigator.clipboard.writeText(code).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
   const [orderDone, setOrderDone] = React.useState<OrderConfirmation | null>(null)
 
   const discountAmount = couponDiscount != null
@@ -129,9 +137,19 @@ export function CartSheet() {
             {orderDone.couponGenerated && (
               <div className="w-full rounded-md border border-border bg-muted/50 p-3 text-left">
                 <p className="text-xs text-muted-foreground">Your reward coupon</p>
-                <p className="mt-1 font-mono text-sm font-semibold text-foreground">
-                  {orderDone.couponGenerated.code}
-                </p>
+                <div className="mt-1 flex items-center justify-between gap-2">
+                  <p className="font-mono text-sm font-semibold text-foreground">
+                    {orderDone.couponGenerated.code}
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="icon-xs"
+                    aria-label="Copy coupon code"
+                    onClick={() => handleCopyCoupon(orderDone.couponGenerated!.code)}
+                  >
+                    {copied ? <CheckIcon className="text-green-500" /> : <Copy />}
+                  </Button>
+                </div>
                 <p className="text-xs text-muted-foreground">
                   {orderDone.couponGenerated.discountPercent}% off your next order
                 </p>
