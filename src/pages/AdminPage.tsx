@@ -90,7 +90,7 @@ export function AdminPage() {
         const code = data.error?.code
         setGenError(
           code === "CONDITION_NOT_MET"
-            ? "Condition not met — total orders must be a non-zero multiple of N"
+            ? "Condition not met — total orders must be a non-zero multiple of 5" // NOTE: HARDCODED VALUE. In real-application this should be read from the backend
             : code === "CODE_ALREADY_EXISTS"
             ? "User already has an unused coupon"
             : data.error?.message ?? "Failed to generate"
